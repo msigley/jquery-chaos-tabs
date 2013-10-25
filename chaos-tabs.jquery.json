@@ -3,8 +3,8 @@
 	"title": "jquery-chaos-tabs",
 	"description": "A Simple yet extendable jQuery tabs plugin that reformats existing html avoiding AJAX allowing for better SEO and easier implementation.",
 	"keywords": [
-		"color",
-		"animation"
+		"tabs",
+		"user interface"
 	],
 	"version": "1.0.20131025",
 	"author": {
