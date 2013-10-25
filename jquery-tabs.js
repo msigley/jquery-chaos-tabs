@@ -7,8 +7,8 @@
 		this.children('.tab').each(function(index, e) {
 			var title = $(e).find('.tab-title');
 			var content = $(e).find('.tab-content');
-			anchorOutput += '<a name="tab-'+encodeURIComponent(title.html())+'"></a>';
-			menuOutput += '<li '+((index === 0) ? 'class="first"' : '')+'><a href="#tab-'+encodeURIComponent(title.html())+'" rel="#tab-'+index+'">'+title.html()+'</a></li>';
+			anchorOutput += '<a name="tab-'+title.html()+'"></a>';
+			menuOutput += '<li '+((index === 0) ? 'class="first"' : '')+'><a href="#tab-'+title.html()+'" rel="#tab-'+index+'">'+title.html()+'</a></li>';
 			contentOutput += '<div id="tab-'+index+'" class="tab-content">'+content.html()+'</div>';
 		});
 		this.html('<div id="tabs-wrap">'+anchorOutput+'<ul class="tab-menu clearfix">'+menuOutput+'</ul>'+contentOutput+'</div>');
