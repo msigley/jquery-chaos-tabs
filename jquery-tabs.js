@@ -1,5 +1,5 @@
 (function( $ ) {
-	$.fn.simpleTabs = function() {
+	$.fn.simpleTabs = function(callback) {
 		//Reformat HTML
 		var anchorOutput = '';
 		var menuOutput = '';
@@ -7,7 +7,9 @@
 		this.children('.tab').each(function(index, e) {
 			var title = $(e).find('.tab-title');
 			var content = $(e).find('.tab-content');
-			anchorOutput += '<a name="tab-'+title.html()+'"></a>';
+			if( $('[id="tab-'+title.html()+'"], a[name="tab-'+title.html()+'"]').length == 0 ) {
+				anchorOutput += '<a name="tab-'+title.html()+'"></a>';
+			}
 			menuOutput += '<li '+((index === 0) ? 'class="first"' : '')+'><a href="#tab-'+title.html()+'" rel="#tab-'+index+'">'+title.html()+'</a></li>';
 			contentOutput += '<div id="tab-'+index+'" class="tab-content">'+content.html()+'</div>';
 		});
@@ -17,20 +19,28 @@
 		this.find('.tab-content').hide();
 		
 		//Check for predefined active tab in location hash
-		if(!currentTabtoHash(this)) {
+		var activateTabTitle = currentTabtoHash(this);
+		if(!activateTabTitle) {
 			//Tab title not found in hash
 			//Set first tab as active and show its content
-			this.find('.tab-menu').find('li:first').addClass('active');
+			var firstTabMenuItem = this.find('.tab-menu').find('li:first');
+			firstTabMenuItem.addClass('active');
 			this.find('.tab-content:first').show();
+			if (callback && typeof(callback) === "function") {  
+				callback(firstTabMenuItem.find('a').html());
+			}
 		} else {
 			//Force broswer to scroll to the appropriate tab anchor
 			var hash = window.location.href.substr(window.location.href.indexOf('#')+1);
-			var anchorElement = $('a[name="'+hash+'"]').get(0);
+			var anchorElement = $('[id="'+hash+'"], a[name="'+hash+'"]').get(0);
 			if(typeof anchorElement === 'undefined') {
 				//Don't decode the hash due to a bug with IE that only matchs encoded hashs in the following query
-				anchorElement = $('a[name="'+decodeURIComponent(hash)+'"]').get(0);
+				anchorElement = $('[id="'+decodeURIComponent(hash)+'"], a[name="'+decodeURIComponent(hash)+'"]').get(0);
 			}
 			anchorElement.scrollIntoView(true);
+			if (callback && typeof(callback) === "function") {  
+				callback(activateTabTitle);
+			}
 		}
 		
 		var tabContainer = this;
@@ -39,7 +49,10 @@
 			//Bind onhashchange event. This allows links to tabs on a page
 			//Only works with modern browsers
 			window.onhashchange = function (e) {
-				currentTabtoHash(tabContainer);
+				var tabFound = currentTabtoHash(tabContainer);
+				if (tabFound && callback && typeof(callback) === "function") {  
+					callback(tabFound);  
+				}
 			};
 		} else {
 			//Bind click events to anchor links for older browsers without support for onhashchange
@@ -51,6 +64,7 @@
 				var regexResult = hash.match(/tab\-(.+)/);
 				if (regexResult != null) {
 					var activateTabTitle = decodeURIComponent(regexResult[1]);
+					var foundTab = false;
 					tabContainer.find('.tab-menu').find('li').each(function() {
 						if($(this).find('a').html() == activateTabTitle) {
 							//Set new active tab
@@ -63,10 +77,22 @@
 							$(currentTab).show();
 							
 							//Stop .each loop
+							foundTab = true;
 							return false;
 						}
 					});
+					if (!foundTab) {
+						//Matching tab title was not found
+						return;
+					}
+					//Found and set currentTab
+					if (callback && typeof(callback) === "function") {  
+						callback(activateTabTitle);
+					}
+					return;
 				}
+				//Regex result not found
+				return;
 			});
 		}
 		
@@ -101,7 +127,7 @@
 				return false;	
 			}
 			//Found and set currentTab
-			return true;
+			return activateTabTitle;
 		}
 		//Regex result not found
 		return false;
