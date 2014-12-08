@@ -1,3 +1,9 @@
+/*
+ * jQuery Chaos Tabs
+ * By Matthew Sigley
+ * Version 1.1.0
+ */
+
 (function( $ ) {
 	$.fn.simpleTabs = function(callback) {
 		//Reformat HTML
