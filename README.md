@@ -1,4 +1,4 @@
-jquery-chaos-tabs
+jQuery Chaos Tabs
 =================
 
 A Simple yet extendable jQuery tabs plugin that reformats existing html avoiding AJAX allowing 
