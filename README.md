@@ -20,7 +20,7 @@ Example Usage
 <html>
 	<head>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="jquery-tabs.js" />
+		<script src="jquery-tabs.js"></script>
 		<script>
 		$(document).ready(function() {
 			$('#chaos-tabs-group').simpleTabs();
