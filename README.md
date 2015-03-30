@@ -22,7 +22,9 @@ Example Usage
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="jquery-tabs.js" />
 		<script>
+		$(document).ready(function() {
 			$('#chaos-tabs-group').simpleTabs();
+		});
 		</script>
 	</head>
 	<body>
