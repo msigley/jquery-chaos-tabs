@@ -31,10 +31,14 @@ Example Usage
 		<h1>jQuery Chaos Tabs Example</h1>
 		<!--This is default jump position for the tabs-->
 		<div id="chaos-tabs-group">
-			<h2 class="tab-title">This is the title of tab 1</h2>
-			<div class="tab-content">This is the content for tab 1</div>
-			<h2 class="tab-title">This is the title of tab 2</h2>
-			<div class="tab-content">This is the content for tab 2</div>
+			<div class="tab">
+				<h2 class="tab-title">This is the title of tab 1</h2>
+				<div class="tab-content">This is the content for tab 1</div>
+			</div>
+			<div class="tab">
+				<h2 class="tab-title">This is the title of tab 2</h2>
+				<div class="tab-content">This is the content for tab 2</div>
+			</div>
 		</div>
 	</body>
 </html>
