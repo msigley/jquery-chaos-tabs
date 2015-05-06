@@ -7,13 +7,13 @@
 (function( $ ) {
 	$.fn.simpleTabs = function(callback) {
 		//Reformat HTML
-		var anchorOutput = '';
-		var menuOutput = '';
-		var contentOutput = '';
+		var anchorOutput = '',
+			menuOutput = '',
+			contentOutput = '';
 		this.children('.tab').each(function(index, e) {
-			var title = $(e).find('.tab-title');
-			var content = $(e).find('.tab-content');
-			if( $('[id="tab-'+title.html()+'"], a[name="tab-'+title.html()+'"]').length == 0 ) {
+			var title = $(e).find('.tab-title'),
+				content = $(e).find('.tab-content');
+			if( $('[id="tab-'+title.html()+'"], a[name="tab-'+title.text()+'"]').length == 0 ) {
 				anchorOutput += '<a name="tab-'+title.html()+'"></a>';
 			}
 			menuOutput += '<li '+((index === 0) ? 'class="first"' : '')+'><a href="#tab-'+title.html()+'" rel="#tab-'+index+'">'+title.html()+'</a></li>';
@@ -49,8 +49,8 @@
 			}
 		}
 		
-		var tabContainer = this;
-		var documentMode = window.document.documentMode;
+		var tabContainer = this,
+			documentMode = window.document.documentMode;
 		if ('onhashchange' in window && (typeof documentMode === 'undefined' || documentMode >= 8)) {
 			//Bind onhashchange event. This allows links to tabs on a page
 			//Only works with modern browsers
@@ -106,12 +106,12 @@
 	};
 	
 	function currentTabtoHash(tabsJQueryObj) {
-		var hash = window.location.href.substr(window.location.href.indexOf('#')+1);
-		var regexResult = hash.match(/tab\-(.+)/);
+		var hash = window.location.href.substr(window.location.href.indexOf('#')+1),
+			regexResult = hash.match(/tab\-(.+)/);
 		if (regexResult != null) {
 			//Set tab in location hash to active and show its content
-			var activateTabTitle = decodeURIComponent(regexResult[1]);
-			var foundTab = false;
+			var activateTabTitle = decodeURIComponent(regexResult[1]),
+				foundTab = false;
 			tabsJQueryObj.find('.tab-menu').find('li').each(function() {
 				if($(this).find('a').html() == activateTabTitle) {
 					//Make this tab the active tab
