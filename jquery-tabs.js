@@ -1,7 +1,7 @@
 /*
  * jQuery Chaos Tabs
  * By Matthew Sigley
- * Version 1.1.0
+ * Version 1.2.0
  */
 
 (function( $ ) {
@@ -9,17 +9,22 @@
 		//Reformat HTML
 		var anchorOutput = '',
 			menuOutput = '',
-			contentOutput = '';
+			contentElements = new Array();
 		this.children('.tab').each(function(index, e) {
 			var title = $(e).find('.tab-title'),
-				content = $(e).find('.tab-content');
-			if( $('[id="tab-'+title.html()+'"], a[name="tab-'+title.text()+'"]').length == 0 ) {
-				anchorOutput += '<a name="tab-'+title.html()+'"></a>';
+				titleText = title.text(),
+				contentClone = $(e).find('.tab-content').clone(true);
+			if( $('[id="tab-'+titleText+'"], a[name="tab-'+titleText+'"]').length == 0 ) {
+				anchorOutput += '<a name="tab-'+titleText+'"></a>';
 			}
-			menuOutput += '<li '+((index === 0) ? 'class="first"' : '')+'><a href="#tab-'+title.html()+'" rel="#tab-'+index+'">'+title.html()+'</a></li>';
-			contentOutput += '<div id="tab-'+index+'" class="tab-content">'+content.html()+'</div>';
+			menuOutput += '<li '+((index === 0) ? 'class="first"' : '')+'><a href="#tab-'+titleText+'" rel="#tab-'+index+'">'+titleText+'</a></li>';
+			contentClone.wrap('<div id="tab-'+index+'" class="tab-content"></div>');
+			contentElements.push(contentClone);
 		});
-		this.html('<div id="tabs-wrap">'+anchorOutput+'<ul class="tab-menu clearfix">'+menuOutput+'</ul>'+contentOutput+'</div>');
+		this.html('<div id="tabs-wrap">'+anchorOutput+'<ul class="tab-menu clearfix">'+menuOutput+'</ul></div>');
+		for(var i=0; i<contentElements.length; i++) {
+			this.append(contentElements[i]);
+		}
 		
 		//Hide all tab content
 		this.find('.tab-content').hide();
