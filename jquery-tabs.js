@@ -1,7 +1,7 @@
 /*
  * jQuery Chaos Tabs
  * By Matthew Sigley
- * Version 1.2.0
+ * Version 1.2.1
  */
 
 (function( $ ) {
@@ -15,16 +15,18 @@
 				titleText = title.text(),
 				contentClone = $(e).find('.tab-content').clone(true);
 			if( $('[id="tab-'+titleText+'"], a[name="tab-'+titleText+'"]').length == 0 ) {
-				anchorOutput += '<a name="tab-'+titleText+'"></a>';
+				anchorOutput += '<div id="tab-'+titleText+'"></div>';
 			}
 			menuOutput += '<li '+((index === 0) ? 'class="first"' : '')+'><a href="#tab-'+titleText+'" rel="#tab-'+index+'">'+titleText+'</a></li>';
-			contentClone.wrap('<div id="tab-'+index+'" class="tab-content"></div>');
+			contentClone.wrap('<div class="tab-content"></div>');
+			contentClone.attr('id', 'tab-'+index);
 			contentElements.push(contentClone);
 		});
-		this.html('<div id="tabs-wrap">'+anchorOutput+'<ul class="tab-menu clearfix">'+menuOutput+'</ul></div>');
+		this.html(anchorOutput+'<ul class="tab-menu clearfix">'+menuOutput+'</ul>');
 		for(var i=0; i<contentElements.length; i++) {
 			this.append(contentElements[i]);
 		}
+		this.wrap('<div id="tabs-wrap"></div>');
 		
 		//Hide all tab content
 		this.find('.tab-content').hide();
