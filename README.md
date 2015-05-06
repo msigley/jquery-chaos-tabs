@@ -56,6 +56,7 @@ Features
 - Callback function support for when a tab is switched
 - Easy to implement via CSS classes
 - Graceful fallback for non-JS browsers like Google-bot.
+- Javascript event maintenance in tab content from source html.
 
 Example Implementations
 -------------------------
