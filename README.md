@@ -4,7 +4,7 @@ jQuery Chaos Tabs
 A Simple yet extendable jQuery tabs plugin that reformats existing html avoiding AJAX allowing 
 for better SEO and easier implementation.
 
-As of version 1.1.0 the generated HTML is fully HTML5 compliant. Legacy browser support is baked 
+As of version 1.2.1 the generated HTML is fully HTML5 compliant. Legacy browser support is baked 
 in for IE versions back to 7.
 
 What is this useful for?
