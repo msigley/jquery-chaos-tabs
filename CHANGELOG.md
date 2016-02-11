@@ -3,6 +3,7 @@ Change Log
 
 Recent changes
 --------------
+* Removed unneccessary CSS class striping on .tab-content elements (1.2.2)
 * Fixed a bug where the use of jQuery.wrap() was stripping the tab content ids (1.2.1)
 * Generated HTML is now completely HTML5 compliant (1.2.1)
 * Javascript events are now maintained in tab content (1.2.0)
