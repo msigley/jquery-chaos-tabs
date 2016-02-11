@@ -1,7 +1,7 @@
 /*
  * jQuery Chaos Tabs
  * By Matthew Sigley
- * Version 1.2.1
+ * Version 1.2.2
  */
 
 (function( $ ) {
@@ -11,15 +11,17 @@
 			menuOutput = '',
 			contentElements = new Array();
 		this.children('.tab').each(function(index, e) {
-			var title = $(e).find('.tab-title'),
+			var eElement = $(e), 
+				title = eElement.find('.tab-title'),
 				titleText = title.text(),
-				contentClone = $(e).find('.tab-content').clone(true);
+				contentClone = eElement.find('.tab-content').clone(true);
 			if( $('[id="tab-'+titleText+'"], a[name="tab-'+titleText+'"]').length == 0 ) {
 				anchorOutput += '<div id="tab-'+titleText+'"></div>';
 			}
 			menuOutput += '<li '+((index === 0) ? 'class="first"' : '')+'><a href="#tab-'+titleText+'" rel="#tab-'+index+'">'+titleText+'</a></li>';
-			contentClone.wrap('<div class="tab-content"></div>');
+			//contentClone.wrap('<div class="tab-content"></div>');
 			contentClone.attr('id', 'tab-'+index);
+			contentClone.hide();
 			contentElements.push(contentClone);
 		});
 		this.html(anchorOutput+'<ul class="tab-menu clearfix">'+menuOutput+'</ul>');
@@ -27,9 +29,6 @@
 			this.append(contentElements[i]);
 		}
 		this.wrap('<div id="tabs-wrap"></div>');
-		
-		//Hide all tab content
-		this.find('.tab-content').hide();
 		
 		//Check for predefined active tab in location hash
 		var activateTabTitle = currentTabtoHash(this);
@@ -79,14 +78,15 @@
 					var activateTabTitle = decodeURIComponent(regexResult[1]);
 					var foundTab = false;
 					tabContainer.find('.tab-menu').find('li').each(function() {
-						if($(this).find('a').html() == activateTabTitle) {
+						var thisElement = $(this);
+						if( thisElement.find('a').html() == activateTabTitle ) {
 							//Set new active tab
 							tabContainer.find('.tab-menu').children('.active').removeClass('active');
-							$(this).addClass('active');
+							thisElement.addClass('active');
 							
 							//Show active tab's content
 							tabContainer.find('.tab-content').hide();
-							var currentTab = $(this).find('a').attr('rel');
+							var currentTab = thisElement.find('a').attr('rel');
 							$(currentTab).show();
 							
 							//Stop .each loop
@@ -120,14 +120,15 @@
 			var activateTabTitle = decodeURIComponent(regexResult[1]),
 				foundTab = false;
 			tabsJQueryObj.find('.tab-menu').find('li').each(function() {
-				if($(this).find('a').html() == activateTabTitle) {
+				var thisElement = $(this);
+				if(thisElement.find('a').html() == activateTabTitle) {
 					//Make this tab the active tab
 					tabsJQueryObj.find('.tab-menu').children('.active').removeClass('active');
-					$(this).addClass('active');
+					thisElement.addClass('active');
 					
 					//Show active tab's content
 					tabsJQueryObj.find('.tab-content').hide();
-					var currentTab = $(this).find('a').attr('rel');
+					var currentTab = thisElement.find('a').attr('rel');
 					$(currentTab).show();
 					
 					//Stop .each loop
